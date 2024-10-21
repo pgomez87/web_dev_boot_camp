@@ -5,9 +5,22 @@ drumButtons.forEach(drumButton => {
     drumButton.addEventListener("click", function (){
 
         let buttonInnerHtml = this.innerHTML;
-        console.log(buttonInnerHtml)
 
-        switch (buttonInnerHtml) {
+        makeSound(buttonInnerHtml);
+
+        buttonAnimation(buttonInnerHtml);
+
+    });
+});
+
+document.addEventListener('keydown', function (e) {
+    makeSound(e.key);
+
+    buttonAnimation(e.key);
+});
+
+    function makeSound(key){
+        switch (key) {
             case "w":
                 let tom1 = new Audio('sounds/tom-1.mp3');
                 tom1.play();
@@ -40,9 +53,13 @@ drumButtons.forEach(drumButton => {
             default:
                 break;
         }
-    });
-});
+    }
+ 
 
-
-
-
+function buttonAnimation(currentKey){
+    let activeButton = document.querySelector(`.${currentKey}`)
+    activeButton.classList.toggle("pressed");
+    setTimeout(function(){
+        activeButton.classList.remove("pressed");
+    }, 100)
+}
